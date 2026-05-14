@@ -2,7 +2,7 @@ import sqlite3
 import os
 import subprocess
 import ipaddress
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, escape
 app = Flask(__name__)
 def autenticar_usuario(username, password):
     conn = sqlite3.connect('usuarios.db')
@@ -41,7 +41,8 @@ def debug():
 @app.route("/comente")
 def comente():
     comentario = request.args.get("comentario", "")
-    return f"<h1>Comentário recebido:</h1><p>{comentario}</p>"
+    comentario_escapado = escape(comentario)
+    return f"<h1>Comentário recebido:</h1><p>{comentario_escapado}</p>"
 
 
 if __name__ == '__main__':
